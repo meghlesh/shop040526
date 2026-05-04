@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Web Solution Dashboard</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts: Oswald and Lato -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@200;400&display=swap"
+    rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0A2540;
+      --primary-blue: #0796FE;
+      --sub-text: #797979;
+      --white: #FFFFFF;
+      --light-bg: #F0F2F5;
+      --table-header: #E9F1F9;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--light-bg);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Sidebar Style */
+    .sidebar {
+      background-color: var(--bg-dark);
+      min-height: 100vh;
+      color: var(--white);
+      position: fixed;
+      width: 240px;
+      z-index: 1000;
+    }
+
+    .sidebar .logo-area {
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .logo-img {
+      width: 160px;
+      height: auto;
+    }
+
+    /* changes */
+    /* .sidebar a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      transition: 0.3s;
+       border-left: 5px solid transparent;
+    } */
+
+    .sidebar a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      padding: 15px 20px;
+      margin: 5px 10px;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      transition: 0.3s;
+      border-left: 5px solid transparent;
+      border-radius: 5px;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--primary-blue);
+      border-left: 5px solid var(--primary-blue);
+    }
+
+    /* .menu-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 15px;
+    } */
+
+    .menu-icon.blue {
+      display: none;
+    }
+
+    .sidebar i {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    .sidebar a:hover i,
+    .sidebar a.active i {
+      color: var(--primary-blue);
+    }
+
+
+
+    
+
+    .toggle-btn {
+      width: 45px;
+      height: 45px;
+      font-size: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      margin-left: -15px;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 240px;
+      width: calc(100% - 240px);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* EXACT HEADER STYLE */
+    .top-header {
+      background: #FFFFFF;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+      border-bottom: 1px solid #E0E0E0;
+      position: fixed;
+      top: 0;
+      left: 240px;
+      right: 0;
+      z-index: 999;
+    }
+
+    .search-bar {
+      background: #F8F9FA;
+      border: 1px solid #E9E9E9;
+      border-radius: 8px;
+      padding: 8px 15px;
+      width: 450px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar i {
+      color: #A0A0A0;
+      margin-right: 10px;
+    }
+
+    .search-bar input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+
+    .notification-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+      color: var(--sub-text);
+      font-size: 20px;
+    }
+
+    .notification-btn .noti-text {
+      font-size: 10px;
+      margin-top: 2px;
+      color: var(--sub-text);
+    }
+
+    .notification-btn .badge {
+      position: absolute;
+      top: 0px;
+      transform: translate(40%, -40%);
+
+      background: #EF4444;
+      color: white;
+      font-size: 9px;
+      padding: 3px 5px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      background: var(--bg-dark);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .content-body {
+      padding: 30px;
+      padding-top: 85px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .dashboard-title h2 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
+      font-size: 35px;
+      margin-bottom: 5px;
+    }
+
+    .dashboard-title p {
+      color: var(--sub-text);
+      font-size: 16px;
+    }
+
+
+    /* Stats Cards */
+
+    .stat-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: 0.3s;
+      height: 100%;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* icon */
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-text h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      color: #0A2540;
+    }
+
+    .stat-text p {
+      margin: 2px 0 0;
+      font-size: 16px;
+      color: #0A2540;
+    }
+
+    .sidebar a:hover .menu-icon.grey {
+      display: none;
+    }
+
+    .sidebar a:hover .menu-icon.blue {
+      display: inline;
+    }
+
+    .sidebar a.active .menu-icon.grey {
+      display: none;
+    }
+
+    .sidebar a.active .menu-icon.blue {
+      display: inline;
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+      .stat-card {
+        padding: 15px;
+      }
+
+      .stat-text h2 {
+        font-size: 20px;
+      }
+
+      .stat-text p {
+        font-size: 13px;
+      }
+    }
+
+    /* icon styles */
+
+
+    .icon-box img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+    }
+
+    .icon-box.blue {
+      background: #E7F1FF;
+      color: #0d6efd;
+    }
+
+    .icon-box.purple {
+      background: #F3E8FF;
+      color: #9333ea;
+    }
+
+    .icon-box.orange {
+      background: #FFF3E6;
+      color: #f59e0b;
+    }
+
+    .icon-box.green {
+      background: #E6F9F0;
+      color: #10b981;
+    }
+
+
+
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        left: -240px;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar.show {
+        left: 0;
+      }
+
+      .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+      }
+
+      .top-header {
+        left: 0 !important;
+      }
+
+      .search-bar {
+        width: 150px;
+      }
+
+      .notification-btn .noti-text {
+        display: none;
+      }
+    }
+
+
+
+
+
+    @media (min-width: 992px) {
+      .search-bar {
+        width: 450px;
+      }
+    }
+
+
+
+    /* Mobile only wrap */
+    @media (max-width: 576px) {
+      .stat-card {
+        flex-wrap: wrap;
+      }
+    }
+
+    /* Tablet + Desktop */
+    @media (min-width: 577px) {
+      .stat-card {
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+    }
+
+
+
+    /* Recent purchase Start css */
+
+    /* MAIN CONTENT */
+
+    .purchase-section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin: 3px 0 0 0;
+    }
+
+    /* BUTTON */
+    .view-btn {
+      padding: 6px 16px;
+      border: 1px solid #2daae1;
+      background: transparent;
+      color: #2daae1;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .view-btn:hover {
+      background-color: #0796FE;
+      color: #fff;
+    }
+
+    table thead tr th {
+      background-color: #E1F2FF !important;
+    }
+
+    /* PRODUCT */
+    .product {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .product img {
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+    }
+
+    /* STATUS */
+    .status {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      display: inline-block;
+    }
+
+    .completed {
+      background: #d4edda;
+      color: #2e7d32;
+    }
+
+    .processing {
+      background: #e0e0e0;
+      color: #555;
+    }
+
+    /* ACTION CENTER FIX */
+    .action {
+      text-align: center;
+      font-size: 20px;
+      vertical-align: middle;
+    }
+
+    /* ACTION */
+    .action {
+      text-align: center;
+      font-size: 20px;
+      cursor: pointer;
+
+    }
+
+    /* DROPDOWN */
+    .action-menu {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: none;
+      min-width: 150px;
+      z-index: 999;
+    }
+
+    .action-menu a {
+      display: block;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: #000;
+    }
+
+    .action-menu a:hover {
+      background: #f2f6fa;
+    }
+
+
+
+    /* TABLE HEADER */
+    table thead {
+      background: #E1F2FF;
+    }
+
+    /* ================= MOBILE RESPONSIVE ================= */
+
+    /* TABLE SCROLL ON SMALL DEVICES */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    /* TABLE TEXT SIZE */
+    table {
+      font-size: 14px;
+    }
+
+    /* TABLE CELL SPACING */
+    table td,
+    table th {
+      white-space: nowrap;
+      padding: 10px;
+    }
+
+    /* TABLE IMAGE SMALLER */
+    @media (max-width: 768px) {
+      .product img {
+        width: 32px;
+        height: 32px;
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      .status {
+        font-size: 11px;
+        padding: 4px 10px;
+      }
+
+      .view-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+      }
+    }
+
+    @media (max-width: 576px) {
+
+      .content-body {
+        padding: 15px;
+        padding-top: 90px;
+      }
+
+      .purchase-section {
+        padding: 15px;
+        margin: 3px 0 0 0;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      .product {
+        gap: 6px;
+      }
+
+      .product img {
+        width: 28px;
+        height: 28px;
+      }
+
+      .status {
+        font-size: 10px;
+        padding: 3px 8px;
+      }
+
+      .action {
+        font-size: 16px;
+      }
+
+    }
+
+    /* EXTRA SMALL DEVICES */
+    @media (max-width: 400px) {
+      table {
+        font-size: 11px;
+      }
+
+      .view-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+    }
+
+    /* Recent purchase end css */
+
+
+
+
+    /* COMMON CARD STYLE */
+    /* Card Base */
+    .custom-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Header */
+    .card-header-custom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-header-custom h6 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .card-header-custom .view-btn {
+      padding: 5px 12px;
+      font-size: 12px;
+    }
+
+    /* ================= DOWNLOAD ================= */
+
+    .download-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #eef2f6;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .download-item .left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-box {
+      width: 42px;
+      height: 42px;
+      background: #e9f3ff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-box img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .sub {
+      font-size: 11px;
+      color: #8a97a6;
+    }
+
+    /* ================= TICKETS ================= */
+
+    .ticket-header,
+    .ticket-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 100px 20px;
+      font-size: 12px;
+      padding: 10px 0;
+      align-items: center;
+    }
+
+    .ticket-header {
+      background: #eef4f9;
+      padding: 8px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .ticket-row {
+      border-bottom: 1px solid #eef2f6;
+    }
+
+    .ticket-row span {
+      line-height: 1.0;
+    }
+
+    /* Status badges */
+    .badge {
+      font-size: 9px;
+      font-weight: 500;
+      display: inline-block;
+
+    }
+
+    .success {
+      background: #e6f7ed;
+      color: #1abc9c;
+    }
+
+    .pending {
+      background: #fff4e5;
+      color: #f39c12;
+    }
+
+    .progress {
+      background: #e8f1ff;
+      color: #4da3ff;
+    }
+
+    /* ================= NOTIFICATIONS ================= */
+
+    .notify-item {
+      border: 1px solid #eef2f6;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .time {
+      font-size: 12px;
+      color: gray;
+    }
+
+    .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #000;
+            font-weight: 500;
+            margin-top: 20px;
+        }
+
+
+         #notificationContainer {
+    max-height: 400px;   /* limit height */
+    overflow-y: auto;    /* enable vertical scroll */
+}
+
+  .notif-dropdown {
+    position: absolute;
+    top: 60px;   /* adjust below bell */
+    right: -15px; /* slight shift for perfect alignment */
+
+    width: 350px;
+
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    z-index: 9999;
+
+    overflow: hidden;
+}
+
+/* Header */
+.notif-header {
+    padding: 8px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+}
+
+/* Body scroll */
+.notif-body {
+    max-height: 190px;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+/* Footer */
+.notif-footer {
+    padding: 8px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+.notif-dropdown {
+    text-align: left;   /*  force left for all content */
+}
+
+
+  /* Added for that profile dropdown */
+  /* added for the click on the profile circle model */
+      .profile-dropdown {
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        width: 270px;
+
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 9999;
+        overflow: hidden;
+      }
+
+      .profile-top {
+        padding: 15px;
+      }
+
+      .profile-img img {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        object-fit: cover;
+
+        /*  border like your image */
+        border: 2px solid #0d6efd;
+      }
+
+      .profile-actions {
+        padding: 10px 0;
+      }
+
+      .profile-item {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .profile-item:hover {
+        background-color: #f5f5f5;
+      }
+
+
+      /* added for the search content */
+      /* SEARCH DROPDOWN CONTAINER */
+.search-dropdown {
+  position: absolute;
+  top: 60px; /* below header */
+  left: 0;
+  width: 450px;
+
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+  max-height: 300px;
+  overflow-y: auto;
+
+  z-index: 9999;
+}
+
+/* EACH ITEM */
+.search-item {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* HOVER EFFECT */
+.search-item:hover {
+  background: #f5f5f5;
+}
+
+/* PRODUCT NAME */
+.search-item strong {
+  font-size: 14px;
+  color: #000;
+}
+
+/* PRICE */
+.search-item small {
+  font-size: 12px;
+  color: #777;
+}
+
+/* EMPTY / LOADING TEXT */
+.search-dropdown .text-muted {
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* SCROLLBAR (optional nice UI) */
+.search-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo-area">
+      <img src="./img/creativesweb.png" alt="Logo" class="logo-img">
+    </div>
+
+    <nav>
+      <a href="BuyerDashboard.html" class="active">
+        <i class="bi bi-house me-2"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="Buyer-purchase1.html">
+        <i class="bi bi-bag me-2"></i>
+        <span>Purchase</span>
+      </a>
+
+      <a href="#">
+        <i class="bi bi-download me-2"></i>
+        <span>Downloads</span>
+      </a>
+
+      <a href="#">
+        <i class="bi bi-star me-2"></i>
+        <span>Review</span>
+      </a>
+
+      <a href="#">
+        <i class="bi bi-heart me-2"></i>
+        <span>Wishlist</span>
+      </a>
+
+      <a href="#">
+        <i class="bi bi-ticket me-2"></i>
+        <span>Support Ticket</span>
+      </a>
+
+      <a href="#">
+        <i class="bi bi-gear me-2"></i>
+        <span>Setting</span>
+      </a>
+    </nav>
+  </div>
+
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+
+    <div class="top-header">
+      <div class="d-flex align-items-center">
+        <button class="btn d-lg-none me-2 toggle-btn" id="sidebarToggle">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="search-bar">
+          <i class="fa fa-search"></i>
+          <input type="text" placeholder="Search" id="searchInput">
+        </div>
+        <div id="searchDropdown" class="search-dropdown d-none"></div>
+      </div>
+      <div class="header-right">
+
+        <div class="notification-btn">
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge" id="notifBadge">1</span>
+          <small class="noti-text">Notification</small>
+        </div>
+        <div id="notificationModal" class="notif-dropdown d-none">
+
+        <div class="notif-header">
+            Notifications <span id="notifCount" class="count-badge">0</span>
+        </div>
+
+        <div id="notifList" class="notif-body"></div>
+
+        <div class="notif-footer">
+            <button id="closeNotif" class="btn btn-sm btn-outline-primary">Close</button>
+        </div>
+
+    </div>
+        <div class="user-avatar">AS</div>
+        <div id="profileDropdown" class="profile-dropdown d-none">
+                <div class="profile-top d-flex align-items-center">
+                    <div id="profileAvatar" class="user-avatar"></div>
+                    <div class="profile-info ms-3">
+                        <div class="fw-bold" id="profileName"></div>
+                        <span class="badge bg-primary" id="profileRole"></span>
+                        <div class="text-muted small mt-1" id="profileEmail"></div>
+                    </div>
+                </div>
+                <hr class="m-0">
+                <div class="profile-actions">
+                    <div class="profile-item" id="logoutBtn">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Sign Out</span>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+
+    <div class="content-body">
+      <div class="dashboard-title">
+        <h2>Dashboard</h2>
+        <p>Welcome back.</p>
+      </div>
+
+
+      <div class="row g-4 mb-4">
+
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="stat-card">
+            <div class="icon-box blue">
+              <img src="./img/icon-park-outline_trend.png" alt="">
+            </div>
+            <div class="stat-text">
+              <p>Total Purchase</p>
+
+              <h2>15</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="stat-card">
+            <div class="icon-box purple">
+              <img src="./img/Download.png" alt="">
+            </div>
+            <div class="stat-text">
+              <p>Total Download</p>
+              <h2>12</h2>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="stat-card">
+            <div class="icon-box orange">
+              <img src="./img/ticket.png" alt="">
+            </div>
+            <div class="stat-text">
+              <p>Tickets</p>
+
+              <h2>5</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="stat-card">
+            <div class="icon-box green">
+              <img src="./img/Money Spent.png" alt="">
+            </div>
+            <div class="stat-text">
+              <p>Money Spent</p>
+
+              <h2>12000</h2>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RECENT PURCHASE -->
+      <div class="purchase-section">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5>Recent Purchase</h5>
+          <button class="view-btn">View All</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-middle">
+
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Product Name</th>
+                <th>Purchase Date</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+
+
+            <tbody>
+              <tr>
+                <td>#ORD -101</td>
+                <td>
+                  <div class="product">
+                    <img src="img/CWS.Inventory.png">
+                    <span>CWS.Inventory</span>
+                  </div>
+                </td>
+                <td>02-04-2026</td>
+                <td>Sakshi Patil</td>
+                <td>Rs.3200</td>
+                <td><span class="status completed">Completed</span></td>
+                <td class="action action-btn">⋮</td>
+              </tr>
+
+              <tr>
+                <td>#ORD -145</td>
+                <td>
+                  <div class="product">
+                    <img src="img/EMS.png">
+                    <span>Employee Management System</span>
+                  </div>
+                </td>
+                <td>02-04-2026</td>
+                <td>Ujjwala</td>
+                <td>Rs.5200</td>
+                <td><span class="status processing">Processing</span></td>
+                <td class="action action-btn">⋮</td>
+              </tr>
+
+              <tr>
+                <td>#ORD -123</td>
+                <td>
+                  <div class="product">
+                    <img src="img/TMS.png">
+                    <span>Task Management System</span>
+                  </div>
+                </td>
+                <td>02-04-2026</td>
+                <td>Rashmika</td>
+                <td>Rs.1200</td>
+                <td><span class="status completed">Completed</span></td>
+                <td class="action action-btn">⋮</td>
+              </tr>
+
+              <tr>
+                <td>#ORD -245</td>
+                <td>
+                  <div class="product">
+                    <img src="img/Hostel Management System.png">
+                    <span>Hostel Management System</span>
+                  </div>
+                </td>
+                <td>02-04-2026</td>
+                <td>Yasaji</td>
+                <td>Rs.3200</td>
+                <td><span class="status completed">Completed</span></td>
+                <td class="action action-btn">⋮</td>
+              </tr>
+
+              <tr>
+                <td>#ORD -063</td>
+                <td>
+                  <div class="product">
+                    <img src="img/Car Rental.png">
+                    <span>Car Rental Service Website</span>
+                  </div>
+                </td>
+                <td>02-04-2026</td>
+                <td>Snehlata</td>
+                <td>Rs.3200</td>
+                <td><span class="status processing">Processing</span></td>
+                <td class="action action-btn">⋮</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+
+      <div class="row g-3 mt-4">
+
+        <!-- ================= DOWNLOAD HISTORY ================= -->
+        <div class="col-lg-4">
+          <div class="custom-card">
+
+            <div class="card-header-custom">
+              <h6>Download History</h6>
+              <button class="btn view-btn">View All</button>
+            </div>
+
+            <!-- Item -->
+            <div class="download-item">
+              <div class="left">
+                <div class="icon-box">
+                  <img src="img/Download History.png">
+                </div>
+                <div>
+                  <div class="title">CWS.Inventory Final.zip</div>
+                  <div class="sub">VERSION 2.4.0 • OCT 14</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-rotate-left"></i>
+            </div>
+
+            <div class="download-item">
+              <div class="left">
+                <div class="icon-box">
+                  <img src="img/Download History.png">
+                </div>
+                <div>
+                  <div class="title">CWS.ENS Final.zip</div>
+                  <div class="sub">VERSION 2.4.0 • OCT 14</div>
+                </div>
+              </div>
+              <i class="fa-solid fa-rotate-left"></i>
+            </div>
+
+            <div class="download-item">
+              <div class="left">
+                <div class="icon-box">
+                  <img src="img/Download History.png">
+                </div>
+                <div>
+                  <div class="title">Hotel Management.zip</div>
+                  <div class="sub">VERSION 2.4.0 • OCT 14</div>
+                </div>
+              </div>
+              <img src="img/Sidebar blue icon (3).png">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ================= SUPPORT TICKET ================= -->
+        <div class="col-lg-4">
+          <div class="custom-card">
+
+            <div class="card-header-custom">
+              <h6>Support Ticket</h6>
+              <button class="btn view-btn">View All</button>
+            </div>
+
+            <!-- Table Header -->
+            <div class="ticket-header">
+              <span>Ticket ID</span>
+              <span>Issue</span>
+              <span>Status</span>
+              <span>Action</span>
+            </div>
+
+            <!-- Row -->
+            <div class="ticket-row">
+              <span>#TKT-101</span>
+              <span>Unable to download CWS.Inventory zip file</span>
+              <span class="badge success">Resolved</span>
+              <span>⋮</span>
+            </div>
+
+            <div class="ticket-row">
+              <span>#TKT-145</span>
+              <span>Not able to payment</span>
+              <span class="badge pending">Pending</span>
+              <span>⋮</span>
+            </div>
+
+            <div class="ticket-row">
+              <span>#TKT-123</span>
+              <span>Facing issue in password change</span>
+              <span class="badge progress">In Progress</span>
+              <span>⋮</span>
+            </div>
+
+            <div class="ticket-row">
+              <span>#TKT-245</span>
+              <span>Unable to purchase EMS product</span>
+              <span class="badge success">Resolved</span>
+              <span>⋮</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ================= NOTIFICATIONS ================= -->
+        <div class="col-lg-4">
+          <div class="custom-card">
+
+            <div class="card-header-custom">
+              <h6>Recent Notifications</h6>
+              <button class="btn view-btn">View All</button>
+            </div>
+
+            <div class="notify-item">
+              <div class="title-row">
+                <span>New Order Received!</span>
+                <span class="time">55 min ago</span>
+              </div>
+              <div class="sub">You've got a new order worth ₹3,200.<br>Check details now.</div>
+            </div>
+
+            <div class="notify-item">
+              <div class="title-row">
+                <span>Payment Received!</span>
+                <span class="time">1 days ago</span>
+              </div>
+              <div class="sub">₹5,000 has been credited to your account.</div>
+            </div>
+
+            <div class="notify-item">
+              <div class="title-row">
+                <span>New Product Added!</span>
+                <span class="time">2 days ago</span>
+              </div>
+              <div class="sub">Your product is now live and ready for<br>sales</div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+      </div>
+
+       <!-- footer bottom -->
+
+    <div class="footer">
+      Copyright © 2025 - 2026 <b>Creative Web Solution.</b> ALL RIGHTS RESERVED
+    </div>
+
+    </div>
+
+
+
+   
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (sidebarToggle) {
+          sidebarToggle.addEventListener('click', function () {
+            sidebar.classList.toggle('show');
+          });
+        }
+
+        document.addEventListener('click', function (event) {
+          const isClickInsideSidebar = sidebar.contains(event.target);
+          const isClickInsideButton = sidebarToggle.contains(event.target);
+
+          if (!isClickInsideSidebar && !isClickInsideButton && sidebar.classList.contains('show')) {
+            sidebar.classList.remove('show');
+          }
+        });
+      });
+    </script>
+
+
+    <!-- DROPDOWN OUTSIDE TABLE -->
+    <div id="actionMenu" class="action-menu">
+      <a href="#">Edit</a>
+      <a href="#">View</a>
+      <a href="#">Update Version</a>
+      <a href="#">Delete</a>
+    </div>
+
+
+    <!-- JS -->
+    <script>
+      const menu = document.getElementById("actionMenu");
+      let isOpen = false;
+
+      document.querySelectorAll(".action-btn").forEach(btn => {
+
+      btn.addEventListener("click", function(e) {
+      e.stopPropagation();
+
+      // Toggle (single click)
+      if (isOpen) {
+      menu.style.display = "none";
+      isOpen = false;
+      return;
+      }
+
+      const rect = this.getBoundingClientRect();
+
+      menu.style.display = "block";
+      menu.style.top = rect.bottom + window.scrollY + "px";
+      menu.style.left = rect.left + window.scrollX - 80 + "px";
+
+      isOpen = true;
+      });
+
+
+      btn.addEventListener("dblclick", function(e) {
+      e.stopPropagation();
+      menu.style.display = "none";
+      isOpen = false;
+      });
+
+      });
+
+      document.addEventListener("click", () => {
+      menu.style.display = "none";
+      isOpen = false;
+      });
+      </script>
+
+
+      <!-- recent purchase end -->
+</body>
+<script>
+// common apifetch
+
+async function apiFetch(url, method = "GET", body = null) {
+  const token = localStorage.getItem("token");
+
+  
+  // if (!token) {
+  //   window.location.href = "login.html";
+  //   return;
+  // }
+
+  const options = {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    }
+  };
+
+  if (body) {
+    options.body = JSON.stringify(body);
+  }
+
+  try {
+    const res = await fetch(url, options);
+
+    if (!res.ok) throw new Error("API Error");
+
+    // handle empty response (for PUT)
+    if (res.status === 204) return null;
+
+    return await res.json();
+
+  } catch (err) {
+    console.error("API Fetch Error:", err);
+    return null;
+  }
+}
+
+// time format
+function timeAgo(dateString) {
+  const now = new Date();
+  const past = new Date(dateString);
+  const diff = Math.floor((now - past) / 1000);
+
+  const minutes = Math.floor(diff / 60);
+  const hours = Math.floor(diff / 3600);
+  const days = Math.floor(diff / 86400);
+
+  if (diff < 60) return "just now";
+  if (minutes < 60) return `${minutes} min ago`;
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  return `${days} day${days > 1 ? 's' : ''} ago`;
+}
+
+// profile dropdown open and close
+document.addEventListener("DOMContentLoaded", async () => {
+
+  const avatar = document.querySelector(".user-avatar");
+  const dropdown = document.getElementById("profileDropdown");
+
+  avatar.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("d-none");
+  });
+
+  dropdown.addEventListener("click", (e) => e.stopPropagation());
+
+  document.addEventListener("click", () => {
+    dropdown.classList.add("d-none");
+  });
+
+  // load profile data
+  const user = await apiFetch("http://localhost:8081/api/users/me");
+
+  if (user) {
+    document.getElementById("profileName").innerText = user.name;
+    document.getElementById("profileEmail").innerText = user.email;
+    document.getElementById("profileRole").innerText = user.role;
+
+    const parts = user.name.trim().split(" ");
+    const initials =
+      parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : "");
+
+    const text = initials.toUpperCase();
+
+    avatar.innerText = text;
+    document.getElementById("profileAvatar").innerText = text;
+  }
+
+  // logout by removing the token
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  });
+});
+
+// notificatios
+document.addEventListener("DOMContentLoaded", () => {
+
+  const bell = document.querySelector(".notification-btn");
+  const modal = document.getElementById("notificationModal");
+  const notifList = document.getElementById("notifList");
+  const notifCount = document.getElementById("notifCount");
+  const closeBtn = document.getElementById("closeNotif");
+
+  // toggle dropdown
+  bell.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    modal.classList.toggle("d-none");
+
+    if (!modal.classList.contains("d-none")) {
+      await reloadNotifications();
+    }
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("d-none");
+  });
+
+  document.addEventListener("click", () => {
+    modal.classList.add("d-none");
+  });
+
+  modal.addEventListener("click", (e) => e.stopPropagation());
+
+  // intial load
+  loadUnreadCount();
+
+  
+});
+
+// notification unread count for the bell icon
+async function loadUnreadCount() {
+  const count = await apiFetch("http://localhost:8081/notifications/unread-count");
+  
+
+  const badge = document.getElementById("notifBadge");
+
+  if (count && count > 0) {
+    badge.innerText = count;
+    badge.classList.remove("d-none");
+  } else {
+    badge.classList.add("d-none");
+  }
+}
+
+// load unread notifications in the dropdown
+async function reloadNotifications() {
+
+  const notifList = document.getElementById("notifList");
+  const notifCount = document.getElementById("notifCount");
+
+  const data = await apiFetch("http://localhost:8081/notifications/unread");
+  console.log("Unread Notifications API Response:", data);
+  
+
+  if (data && data.length > 0) {
+
+    notifCount.innerText = data.length;
+    notifList.innerHTML = "";
+
+    data.forEach(n => {
+      const time = timeAgo(n.createdAt);
+
+      notifList.innerHTML += `
+        <div class="notify-item" onclick="markAsRead(${n.id})" style="cursor:pointer;">
+          <div class="title-row">
+            <span>${n.title}</span>
+            <span class="time">${time}</span>
+          </div>
+          <div class="sub">${n.message}</div>
+        </div>
+      `;
+    });
+
+  } else {
+    notifList.innerHTML = `<p class="text-center text-muted">No notifications</p>`;
+    notifCount.innerText = 0;
+  }
+}
+
+// mark as read when click on the notification
+async function markAsRead(id) {
+
+  await apiFetch(`http://localhost:8081/notifications/${id}/read`, "PUT");
+
+  // Refresh UI
+  await loadUnreadCount();
+  await reloadNotifications();
+  
+}
+</script>
+
+<script>
+  const searchInput = document.getElementById("searchInput");
+const resultBox = document.getElementById("searchDropdown");
+
+let debounceTimer;
+
+// search input
+searchInput.addEventListener("input", function () {
+
+    clearTimeout(debounceTimer);
+    const query = this.value.trim();
+
+    console.log("Typing:", query);
+
+    if (query.length === 0) {
+        resultBox.classList.add("d-none");
+        resultBox.innerHTML = "";
+        return;
+    }
+
+    debounceTimer = setTimeout(async () => {
+
+        resultBox.classList.remove("d-none");
+        resultBox.innerHTML = `<div class="text-muted">Searching...</div>`;
+
+        try {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                console.error("No token found");
+                return;
+            }
+
+            const res = await fetch(
+                `http://localhost:8081/api/search?q=${encodeURIComponent(query)}`,
+                {
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                }
+            );
+
+            console.log("API Status:", res.status);
+
+            if (!res.ok) {
+                resultBox.innerHTML = `<div class="text-muted">Error loading</div>`;
+                return;
+            }
+
+            const data = await res.json();
+            console.log("API Data:", data);
+
+            renderResults(data);
+
+        } catch (err) {
+            console.error("Search error:", err);
+            resultBox.innerHTML = `<div class="text-muted">Something went wrong</div>`;
+        }
+
+    }, 400);
+});
+
+// render results
+function renderResults(products) {
+
+    if (!products || products.length === 0) {
+        resultBox.innerHTML = `<div class="text-muted">No result found</div>`;
+        return;
+    }
+
+    let html = "";
+
+    products.forEach(p => {
+
+        const name = p.title || "No Name";
+
+        html += `
+            <div class="search-item" onclick="goToProduct(${p.id})">
+                <strong>${name}</strong><br>
+                <small>${p.type}</small>
+            </div>
+        `;
+    });
+
+    resultBox.innerHTML = html;
+}
+
+// redirect to the respective product
+function goToProduct(id) {
+    window.location.href = `/product-details.html?id=${id}`;
+}
+
+
+// close the search result when click outside
+document.addEventListener("click", function (e) {
+    if (!searchInput.contains(e.target) && !resultBox.contains(e.target)) {
+        resultBox.classList.add("d-none");
+    }
+});
+</script>
+</html>

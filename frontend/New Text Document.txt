@@ -1,0 +1,7 @@
+ <!-- Table Header -->
+              <div class="ticket-header d-flex justify-content-between">
+<span>Ticket ID</span>
+                <span>Issue</span>
+                <span>Status</span>
+                <span>Action</span>
+              </div>

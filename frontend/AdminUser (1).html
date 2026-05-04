@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management - Creative Web Solution</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-blue: #0091ff;
+      --active-bg: #eef7ff;
+      --border-color: #e9ecef;
+      --text-dark: #333;
+      --text-gray: #7e7e7e;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: #f5f6f8;
+      color: #0A2540;
+      margin-left: 250px;
+      overflow-x: hidden;
+    }
+
+    /* --- Header Styles --- */
+    .top-header {
+      height: 70px;
+      background-color: #ffffff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-mobile-logo {
+      display: none;
+      width: 108px;
+      height: auto;
+      max-height: 38px;
+      object-fit: contain;
+      margin-left: 4px;
+
+    }
+
+    .header-search-container {
+      width: 500px;
+      height: 45px;
+      background-color: #F1F3F4;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      overflow: visible;
+      margin-left: 0;
+    }
+
+    .search-icon-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon-wrapper i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9E9E9E;
+      z-index: 2;
+    }
+
+    .header-search {
+      width: 100%;
+      height: 45px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 15px 8px 42px;
+      font-size: 15px;
+      outline: none;
+      box-shadow: none;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin-left: auto;
+    }
+
+
+    .notification-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .notification-icon {
+      font-size: 26px;
+      color: #797979;
+      position: relative;
+      line-height: 1;
+    }
+
+    .notif-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      min-width: 18px;
+      height: 18px;
+      background-color: #E74C3C;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 0 5px;
+      border-radius: 999px;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notif-text {
+      font-size: 9px;
+      color: #797979;
+      margin-top: 1px;
+      font-weight: 400;
+    }
+
+    .user-avatar,
+    .profile-circle {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background-color: #0A2540;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .notif-dropdown {
+      position: absolute;
+      top: 60px;
+      right: -15px;
+      width: 350px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: 60px;
+      right: 10px;
+      width: 270px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    .profile-top {
+      padding: 15px;
+    }
+
+    .profile-actions {
+      padding: 10px 0;
+    }
+
+    .profile-item {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .profile-item:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      body {
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      #menuToggle {
+        display: flex;
+        /* menu button show */
+      }
+
+      .header-mobile-logo {
+        display: block;
+      }
+
+      .header-search-container {
+        display: none;
+        /* hide search */
+      }
+
+      .top-header {
+        justify-content: space-between;
+      }
+    }
+
+    /* Desktop */
+    #menuToggle {
+      display: none !important;
+    }
+
+    /* Mobile only */
+    @media (max-width: 768px) {
+      #menuToggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* Small Mobile */
+    @media (max-width: 480px) {
+      .notif-text {
+        display: none;
+      }
+
+      .header-search {
+        font-size: 0.8rem;
+      }
+    }
+
+    #menuToggle {
+      font-size: 1.5rem;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: #0A2540;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+    }
+
+    #menuToggle i {
+      font-size: 26px;
+    }
+
+    /* --- Sidebar Styles --- */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 250px;
+      min-height: 100vh;
+      background-color: #0A2540 !important;
+      border-right: 1px solid #eee;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+      z-index: 1000;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-logo {
+      text-align: center;
+      padding: 14px 10px 4px;
+      margin-bottom: 8px;
+      margin-top: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-logo img {
+      height: 50px;
+      margin-bottom: 8px;
+      object-fit: contain;
+    }
+
+    .sidebar .nav-link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 12px 20px !important;
+      margin: 6px 12px;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: #ffffff !important;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .sidebar .nav-link i {
+      width: 24px;
+      margin-right: 12px;
+      font-size: 18px;
+      color: #ffffff;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .sidebar .nav-link::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 6px;
+      background-color: #0796FE;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active {
+      background-color: rgba(7, 150, 254, 0.2);
+      color: #0796FE !important;
+      font-weight: 600;
+    }
+
+    .sidebar .nav-link:hover i,
+    .sidebar .nav-link.active i {
+      color: #0796FE;
+    }
+
+    .sidebar .nav-link:hover::before,
+    .sidebar .nav-link.active::before {
+      opacity: 1;
+    }
+
+
+    @media (max-width: 992px) {
+      .header-search-container {
+        width: min(420px, 48vw);
+      }
+    }
+
+    /* Mobile */
+
+
+    @media (max-width: 767px) {
+      .sidebar {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        width: min(82vw, 280px);
+        max-width: none;
+        height: calc(100vh - 64px);
+        background: #0A2540;
+        transform: translateX(-100%);
+        z-index: 1100;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+    }
+
+    .overlay {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 64px);
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 1000;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .sidebar .nav-link:active {
+      background-color: transparent !important;
+      color: #ffffff !important;
+    }
+
+    @media (max-width: 768px) {
+
+      body {
+        margin-left: 0 !important;
+      }
+
+      .sidebar {
+        top: 70px;
+        transform: translateX(-100%);
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .overlay {
+        top: 70px;
+      }
+    }
+
+    /* --- End of Header & Sidebar Styles --- */
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* --- Main Container Wrapper --- */
+    .content-box {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(15, 41, 86, 0.06);
+      padding: 20px;
+      margin: 20px;
+      margin-left: 20px;
+      margin-top: 30px;
+    }
+
+    /* --- Top Navigation Bar --- */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    /* --- Page Title Styling --- */
+    .page-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 26px;
+      font-weight: 500;
+      color: #334155;
+      margin: 0;
+    }
+
+    /* --- Right Actions Container --- */
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* --- Search Input Styling --- */
+    .search-group {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0 15px;
+      width: 320px;
+      height: 44px;
+    }
+
+    .search-group i {
+      color: #94a3b8;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    .search-group input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    /*FILTER PANEL STYLES */
+    /* Wrapper */
+    .filter-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Button */
+    .btn-filter {
+      border: 2px solid #0796FE;
+      background: transparent;
+      color: #0796FE;
+      padding: 5px 15px;
+      border-radius: 5px;
+      font-weight: 600;
+      height: 38px;
+      width: 100px;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-filter:hover {
+      background: #0796FE;
+      color: white;
+    }
+
+    .btn-filter i {
+      font-size: 22px;
+    }
+
+    /* PANEL */
+    .filter-panel {
+      position: absolute;
+      top: 110%;
+      right: 0;
+      width: 270px;
+      background: #ffffff !important;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      z-index: 9999;
+    }
+
+    /* OPEN */
+    .filter-panel.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Labels (Role, Status, Registration) */
+    .filter-panel label {
+      color: #0A2540;
+      font-weight: 400;
+    }
+
+    /* INPUT */
+    .filter-input {
+      margin-top: 6px;
+      padding: 10px;
+      border: 1px solid #dcdcdc;
+      border-radius: 8px;
+      width: 100%;
+      font-size: 14px;
+      color: #0A2540;
+      background: #fff;
+    }
+
+    /* TITLE */
+    .filter-panel h5 {
+      font-weight: 600;
+      color: #0A2540;
+    }
+
+    /* CLEAR ALL */
+    .clear-all {
+      color: #0796FE;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Labels */
+    .filter-panel label {
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    /* Inputs */
+    .filter-input {
+      margin-top: 6px;
+      padding: 10px;
+      border: 1px solid #313030;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #6c757d;
+      background: #ffffff;
+    }
+
+    /*filter styles END */
+
+    /* --- Add User Button Styling --- */
+    .btn-add {
+      background: #0796FE;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 15px;
+      height: 38px;
+      width: 120px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-add:hover {
+      background: #0796FE;
+    }
+
+    /* =========================
+       TABLE WRAPPER
+    ========================= */
+    .tbl-wrap {
+      overflow-x: auto;
+    }
+
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1100px;
+    }
+
+    /* =========================
+       TABLE HEADER
+    ========================= */
+    .user-table thead th {
+      background: #e9f5ff;
+      color: #0A2540;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 16px 14px;
+      text-align: left;
+      border: none;
+      white-space: nowrap;
+    }
+
+    /* =========================
+       TABLE BODY
+    ========================= */
+    .user-table tbody td {
+      padding: 16px 14px;
+      border-top: 1px solid #edf2f7;
+      font-size: 14px;
+      color: #0A2540;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    /* User ID style */
+    .u-id {
+      color: #0A2540;
+      font-weight: 500;
+    }
+
+    /* =========================
+       USER NAME + AVATAR
+    ========================= */
+    .u-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      color: #0A2540;
+    }
+
+    .u-avatar {
+      width: 40px;
+      height: 40px;
+      background: #e2e1e1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #797979;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .u-avatar i {
+      font-size: 30px;
+    }
+
+
+    .role {
+      padding: 3px 16px;
+      border-radius: 15px;
+      font-size: 11px;
+      font-weight: 600;
+      width: 80px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    /* Buyer (light blue) */
+    .buyer {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    /* Seller (cyan) */
+    .seller {
+      background: #e0f7fa;
+      color: #0796FE;
+    }
+
+    /* =========================
+       STATUS BADGES
+    ========================= */
+    .status {
+      padding: 3px 0;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+
+      width: 100px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    /* Active (green) */
+    .active {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    /* Suspended (red/pink) */
+    .suspend {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    /* =========================
+       ACTION BUTTON
+    ========================= */
+    .dots {
+      font-size: 20px;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: 0.2s ease;
+      color: #000;
+    }
+
+    .dots:hover {
+      color: #334155;
+    }
+
+    /* Action Menu */
+    .action-menu {
+      position: absolute;
+      right: 6px;
+      top: 28px;
+      width: 110px;
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      padding: 6px 0;
+      display: none;
+      z-index: 999;
+    }
+
+    /* TEXT */
+    .action-menu div {
+      padding: 4px 6px;
+      font-size: 12px;
+      color: #0A2540;
+      font-weight: 530;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    /* hover */
+    .action-menu div:hover {
+      background: #f5f5f5;
+    }
+
+
+    /* =========================
+       MOBILE RESPONSIVE
+    ========================= */
+    @media (max-width: 768px) {
+
+      .top-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+
+      .search-group {
+        width: 100%;
+      }
+
+
+      .btn-row {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+      }
+
+      /* Equal buttons */
+      .btn-row .filter-wrapper,
+      .btn-row .btn-add {
+        flex: 1;
+      }
+
+      .btn-filter,
+      .btn-add {
+        width: 100%;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .tbl-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .user-table {
+      min-width: 900px;
+    }
+
+    
+
+    @media (max-width: 768px) {
+      .content-box {
+        margin: 10px;
+        margin-top: 20px;
+      }
+    }
+
+    .tbl-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .user-table {
+      min-width: 900px;
+    }
+    .filter-dropdown .btn {
+    width: 130px;
+  }
+
+  .filter-dropdown .dropdown-menu {
+    width: 130px;
+  }
+
+  @media (max-width: 768px) {
+    .filter-dropdown .btn,
+    .filter-dropdown .dropdown-menu {
+      width: 100%;
+    }
+  }
+
+/* iPad / Tablet FIX */
+
+@media (max-width: 1024px) {
+
+  body {
+    margin-left: 250px !important; 
+  }
+
+  .sidebar {
+    transform: translateX(0); 
+  }
+
+  #menuToggle {
+    display: none !important; 
+  }
+}
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .header-search-container {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .content-box {
+    margin: 15px;
+  }
+
+  .top-bar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* DESKTOP FIX */
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: nowrap;   
+}
+
+/* Search fix */
+
+.search-group {
+  width: 300px;
+  max-width: 100%;
+  flex-shrink: 1;   
+}
+
+.filter-wrapper,
+.btn-add {
+  flex-shrink: 0;
+}
+
+  .search-group {
+    width: 100%;
+  }
+
+  .btn-add {
+    width: auto;
+  }
+  
+
+  .search-group {
+    width: 60%;
+  }
+
+  .filter-wrapper {
+    width: auto;
+  }
+
+  .btn-add {
+    width: auto;
+  }
+
+
+    /* =========================
+   PAGINATION RESPONSIVE FIX
+========================= */
+    .pagination-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 25px;
+      overflow-x: auto;
+      /* IMPORTANT */
+      padding-bottom: 5px;
+    }
+
+    .pagination-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
+    /* Page Numbers */
+    .page-number {
+      min-width: 34px;
+      height: 34px;
+      padding: 0 8px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      color: #334155;
+      background: #fff;
+      transition: 0.2s;
+      flex-shrink: 0;
+      /* IMPORTANT */
+    }
+
+    .page-number.active {
+      background: #0ea5e9;
+      color: #fff;
+      border-color: #0ea5e9;
+    }
+
+    /* Arrows */
+    .page-btn {
+      min-width: 34px;
+      height: 34px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    /* Dots */
+    .dots {
+      padding: 0 4px;
+      font-size: 14px;
+      color: #64748b;
+      flex-shrink: 0;
+    }
+
+    .table-footer {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 14px;
+      color: #0A2540;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .pagination-wrapper {
+        justify-content: flex-start;
+        /* LEFT on mobile */
+      }
+    }
+
+    /* ================= MOBILE FIX ONLY ================= */
+@media (max-width: 768px) {
+
+  /* Body full width */
+  body {
+    margin-left: 0 !important;
+  }
+
+ 
+  .sidebar {
+    position: fixed;
+    top: 70px; 
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 70px);
+    transform: translateX(-100%);
+    transition: 0.3s ease;
+    z-index: 1200;
+  }
+
+  /* Show sidebar */
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  /* Overlay */
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: rgba(0,0,0,0.4);
+    z-index: 1100;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+ 
+  #menuToggle {
+    display: flex !important;
+    z-index: 1300;
+  }
+
+  
+  .top-header {
+    height: 70px;
+    padding: 0 15px;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <!-- Top Header Bar -->
+  <header class="top-header">
+    <button class="btn" id="menuToggle">
+      <i class="fa fa-bars"></i>
+    </button>
+    <a href="AdminDashboard.html" class="header-mobile-logo-link">
+      <img src="img/emscwslogo.png" alt="Logo" class="header-mobile-logo">
+    </a>
+
+    <div class="header-search-container">
+      <div class="search-icon-wrapper">
+        <i class="fa fa-search"></i>
+        <input type="text" class="header-search" placeholder="Search">
+        <div id="searchResults" class="p-2 bg-white border rounded shadow"
+          style="width:100%; max-height:300px; overflow:auto; display:none; position:absolute; top:100%; left:0; z-index:99999;">
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="notification-group" onclick="loadNotifications()">
+        <div class="notification-icon">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notif-badge" id="notificationCount">1</span>
+        </div>
+        <span class="notif-text">Notification</span>
+        <div id="notificationDropdown" class="notif-dropdown d-none"></div>
+      </div>
+
+      <div class="user-avatar" id="userInitials">AS</div>
+      <div id="profileDropdown" class="profile-dropdown d-none">
+        <div class="profile-top d-flex align-items-center">
+          <div id="profileAvatar" class="profile-circle"></div>
+          <div class="profile-info ms-3">
+            <div class="fw-bold" id="profileName"></div>
+            <span class="badge bg-primary" id="profileRole"></span>
+            <div class="text-muted small mt-1" id="profileEmail"></div>
+          </div>
+        </div>
+        <hr class="m-0">
+        <div class="profile-actions">
+          <div class="profile-item" id="logoutBtn">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Sign Out</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="img/creativesweb.png" alt="Logo">
+    </div>
+    <nav class="nav flex-column">
+      <a class="nav-link " href="AdminDashboard.html"><i class="bi bi-house"></i> Dashboard</a>
+      <a class="nav-link active " href="AdminUser (1).html"><i class="bi bi-person-fill"></i> Users</a>
+      <a class="nav-link" href="AdminAuthor.html"><i class="bi bi-person-video2"></i> Authors</a>
+      <a class="nav-link" href="#"><i class="bi bi-box-seam"></i> Products</a>
+      <a class="nav-link" href="#"><i class="bi bi-star"></i> Review</a>
+      <a class="nav-link" href="#"><i class="bi bi-headset"></i> Support</a>
+      <a class="nav-link" href="#"><i class="bi bi-file-earmark-text"></i> CMS</a>
+      <a class="nav-link" href="#"><i class="bi bi-wallet2"></i> Finance</a>
+      <a class="nav-link" href="#"><i class="bi bi-gear"></i> Setting</a>
+    </nav>
+  </aside>
+  <div class="overlay"></div>
+
+  <script>
+    const toggleBtn = document.getElementById("menuToggle");
+    const sidebar = document.querySelector(".sidebar");
+    const overlay = document.querySelector(".overlay");
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      overlay.classList.toggle("active");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("active");
+      overlay.classList.remove("active");
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+  <!-- =========================
+       MAIN CONTENT SECTION
+  ========================= -->
+  <section class="content-box">
+
+    <div class="top-bar">
+      <h2 class="page-title">User Management</h2>
+
+      <div class="top-actions">
+
+        <div class="search-group">
+          <i class="bi bi-search"></i>
+          <input type="text" id="tableSearch" placeholder="Search">
+        </div>
+
+        <div class="filter-wrapper">
+
+          <!-- Button -->
+          <button class="btn-filter" id="filterBtn">
+            <i class="bi bi-filter"></i> Filter
+          </button>
+
+          <!-- Filter Panel -->
+          <div class="filter-panel" id="filterPanel">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="m-0">Filter By</h5>
+              <span class="clear-all">Clear All</span>
+            </div>
+
+            <!-- Role -->
+            <label>Role</label>
+            <div class="dropdown filter-dropdown mt-2">
+  <button class="btn btn-light border w-100 d-flex justify-content-between align-items-center"
+          type="button" data-bs-toggle="dropdown">
+    Select 
+    <i class="bi bi-chevron-down"></i>
+  </button>
+
+  <ul class="dropdown-menu ">
+    <li>
+  <a class="dropdown-item role-filter" data-value="Buyer" href="#">Buyer</a>
+</li>
+<li>
+  <a class="dropdown-item role-filter" data-value="Seller" href="#">Seller</a>
+</li>
+  </ul>
+</div>
+
+            <!-- Status -->
+            <label>Status</label>
+          <div class="dropdown filter-dropdown mt-2">
+  <button class="btn btn-light border w-100 d-flex justify-content-between align-items-center"
+          type="button" data-bs-toggle="dropdown">
+    Select Status
+    <i class="bi bi-chevron-down"></i>
+  </button>
+
+  <ul class="dropdown-menu ">
+
+<li>
+  <a class="dropdown-item status-filter" data-value="Active" href="#">Active</a>
+</li>
+<li>
+  <a class="dropdown-item status-filter" data-value="Suspended" href="#">Suspended</a>
+</li>
+  </ul>
+</div>
+
+            <!-- Date -->
+            <label>Registration</label>
+            <input type="date" class="filter-input">
+
+          </div>
+        </div>
+
+        <button class="btn-add">Add User</button>
+
+      </div>
+    </div>
+
+
+
+    <!-- Table Section -->
+    <div class="tbl-wrap">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Registration Date</th>
+            <th>Last Login</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="userBody">
+
+          <tr>
+            <td class="u-id">#USR101</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Sakshi Patil
+              </div>
+            </td>
+            <td>sakshipatil@gmail.com</td>
+            <td><span class="role buyer">Buyer</span></td>
+            <td><span class="status suspend">Suspended</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div>Delete</div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="u-id">#USR102</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Ujjwal G
+              </div>
+            </td>
+            <td>ujjwal@gmail.com</td>
+            <td><span class="role seller">Seller</span></td>
+            <td><span class="status active">Active</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div class="text-danger">Delete</div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="u-id">#USR115</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Praful M
+              </div>
+            </td>
+            <td>praful@gmail.com</td>
+            <td><span class="role buyer">Buyer</span></td>
+            <td><span class="status active">Active</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div class="text-danger">Delete</div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="u-id">#USR125</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Yash B
+              </div>
+            </td>
+            <td>yash@gmail.com</td>
+            <td><span class="role seller">Seller</span></td>
+            <td><span class="status active">Active</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div class="text-danger">Delete</div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="u-id">#USR123</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Rashmika
+              </div>
+            </td>
+            <td>Rashmika@gmail.com</td>
+            <td><span class="role seller">Seller</span></td>
+            <td><span class="status active">Active</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div class="text-danger">Delete</div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="u-id">#USR123</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Rashmika
+              </div>
+            </td>
+            <td>Rashmika@gmail.com</td>
+            <td><span class="role buyer">Buyer</span></td>
+            <td><span class="status active">Active</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div class="text-danger">Delete</div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="u-id">#USR123</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Rashmika
+              </div>
+            </td>
+            <td>Rashmika@gmail.com</td>
+            <td><span class="role seller">Seller</span></td>
+            <td><span class="status suspend">Suspended</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div class="text-danger">Delete</div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="u-id">#USR123</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Rashmika
+              </div>
+            </td>
+            <td>Rashmika@gmail.com</td>
+            <td><span class="role buyer">Buyer</span></td>
+            <td><span class="status active">Active</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div class="text-danger">Delete</div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="u-id">#USR123</td>
+            <td>
+              <div class="u-info">
+                <div class="u-avatar"><i class="bi bi-person-fill"></i></div>
+                Rashmika
+              </div>
+            </td>
+            <td>Rashmika@gmail.com</td>
+            <td><span class="role buyer">Buyer</span></td>
+            <td><span class="status suspend">Suspended</span></td>
+            <td>02-04-2026</td>
+            <td>1 hour ago</td>
+            <td class="text-center position-relative">
+              <i class="bi bi-three-dots-vertical dots action-btn"></i>
+
+              <div class="action-menu">
+                <div>Edit</div>
+                <div>View</div>
+                <div>Suspend User</div>
+                <div>Activate User</div>
+                <div>Reset Password</div>
+                <div class="text-danger">Delete</div>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper">
+      <div class="pagination-box">
+
+        <!-- Left Arrow -->
+        <div class="page-btn">
+          <i class="bi bi-chevron-left"></i>
+        </div>
+
+        <!-- Page Numbers -->
+        <div class="page-number active">1</div>
+        <div class="page-number">2</div>
+        <div class="page-number">3</div>
+        <div class="page-number">4</div>
+        <div class="page-number">5</div>
+
+        <!-- Dots -->
+        <div class="dots">...</div>
+
+        <div class="page-number">10</div>
+
+        <!-- Right Arrow -->
+        <div class="page-btn">
+          <i class="bi bi-chevron-right"></i>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="table-footer">
+    Copyright © 2025 - 2026 <b>Creative Web Solution.</b> ALL RIGHTS RESERVED
+  </div>
+  <script>
+    document.getElementById("menuToggle").style.display = "flex";
+  </script>
+  <script>
+    const filterBtn = document.getElementById("filterBtn");
+    const filterPanel = document.getElementById("filterPanel");
+
+    /* Toggle */
+    filterBtn.addEventListener("click", () => {
+      filterPanel.classList.toggle("active");
+    });
+
+    /* Click outside → close */
+    document.addEventListener("click", (e) => {
+      if (!filterBtn.contains(e.target) && !filterPanel.contains(e.target)) {
+        filterPanel.classList.remove("active");
+      }
+    });
+  </script>
+  <script>
+    // ===============================
+    // PAGINATION LOGIC (WORKING)
+    // ===============================
+
+    const rowsPerPage = 5;
+    const tableBody = document.getElementById("userBody");
+    const allRows = Array.from(tableBody.querySelectorAll("tr"));
+
+    const pageNumbers = document.querySelectorAll(".page-number");
+    const prevBtn = document.querySelector(".page-btn:first-child");
+    const nextBtn = document.querySelector(".page-btn:last-child");
+
+    let currentPage = 1;
+    const totalPages = Math.ceil(allRows.length / rowsPerPage);
+
+    function displayPage(page) {
+      currentPage = page;
+
+      // Hide all rows
+      allRows.forEach(row => row.style.display = "none");
+
+      // Show rows for current page
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+
+      allRows.slice(start, end).forEach(row => {
+        row.style.display = "";
+      });
+
+      updatePaginationUI();
+    }
+
+    function updatePaginationUI() {
+      pageNumbers.forEach(btn => {
+        btn.classList.remove("active");
+        if (parseInt(btn.textContent) === currentPage) {
+          btn.classList.add("active");
+        }
+      });
+    }
+
+    // Page number click
+    pageNumbers.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const page = parseInt(btn.textContent);
+        if (!isNaN(page)) {
+          displayPage(page);
+        }
+      });
+    });
+
+    // Previous button
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        displayPage(currentPage - 1);
+      }
+    });
+
+    // Next button
+    nextBtn.addEventListener("click", () => {
+      if (currentPage < totalPages) {
+        displayPage(currentPage + 1);
+      }
+    });
+
+    // Initialize
+    displayPage(1);
+  </script>
+  <script>
+    document.querySelectorAll(".dots").forEach(dot => {
+      dot.classList.add("action-btn");
+
+      // Create menu
+      const menu = document.createElement("div");
+      menu.classList.add("action-menu");
+      menu.innerHTML = `
+    <div>Edit</div>
+    <div>View</div>
+    <div>Suspend User</div>
+    <div>Activate User</div>
+    <div>Reset Password</div>
+    <div style="color:red;">Delete</div>
+  `;
+
+      // parent td la position relative kar
+      const parentTd = dot.parentElement;
+      parentTd.classList.add("position-relative");
+      parentTd.appendChild(menu);
+    });
+  </script>
+  <script>
+    document.addEventListener("click", function (e) {
+      const btn = e.target.closest(".action-btn");
+
+      // close all
+      document.querySelectorAll(".action-menu").forEach(m => m.style.display = "none");
+
+      if (btn) {
+        e.stopPropagation();
+        const menu = btn.nextElementSibling;
+        menu.style.display = "block";
+      }
+    });
+  </script>
+  <script>
+    document.getElementById("tableSearch").addEventListener("keyup", function () {
+      let value = this.value.toLowerCase();
+
+      let rows = document.querySelectorAll("#userBody tr");
+
+      rows.forEach(row => {
+        let text = row.innerText.toLowerCase();
+
+        if (text.includes(value)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    });
+  </script>
+<script>
+let selectedRole = "";
+let selectedStatus = "";
+let selectedDate = "";
+
+const rows = document.querySelectorAll("#userBody tr");
+
+document.querySelectorAll(".role-filter").forEach(item => {
+  item.addEventListener("click", function (e) {
+    e.preventDefault();
+    selectedRole = this.dataset.value;
+
+    
+    this.closest(".dropdown").querySelector("button").innerText = selectedRole;
+
+    applyFilters();
+  });
+});
+
+
+document.querySelectorAll(".status-filter").forEach(item => {
+  item.addEventListener("click", function (e) {
+    e.preventDefault();
+    selectedStatus = this.dataset.value;
+
+    
+    this.closest(".dropdown").querySelector("button").innerText = selectedStatus;
+
+    applyFilters();
+  });
+});
+
+document.querySelector(".filter-input").addEventListener("change", function () {
+  selectedDate = this.value;
+  applyFilters();
+});
+
+function applyFilters() {
+  rows.forEach(row => {
+
+    let role = row.querySelector(".role").innerText.trim();
+    let status = row.querySelector(".status").innerText.trim();
+    let date = row.children[5].innerText.trim();
+
+    let roleMatch = !selectedRole || role === selectedRole;
+    let statusMatch = !selectedStatus || status === selectedStatus;
+    let dateMatch = !selectedDate || formatDate(date) === selectedDate;
+
+    if (roleMatch && statusMatch && dateMatch) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+}
+
+function formatDate(dateStr) {
+  let parts = dateStr.split("-");
+  return `${parts[2]}-${parts[1]}-${parts[0]}`;
+}
+
+
+
+document.querySelector(".clear-all").addEventListener("click", () => {
+  selectedRole = "";
+  selectedStatus = "";
+  selectedDate = "";
+
+  
+  document.querySelector(".filter-input").value = "";
+
+  
+  document.querySelectorAll(".filter-dropdown button")[0].innerHTML = `Select <i class="bi bi-chevron-down"></i>`;
+  document.querySelectorAll(".filter-dropdown button")[1].innerHTML = `Select Status <i class="bi bi-chevron-down"></i>`;
+
+  
+  rows.forEach(row => row.style.display = "");
+});
+</script>
+
+</body>
+
+</html>
