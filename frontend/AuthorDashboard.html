@@ -1581,7 +1581,7 @@
                         return;
                     }
 
-                    const res = await fetch(`http://localhost:8081/api/search?q=${encodeURIComponent(query)}`, {
+                    const res = await fetch(`https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/search?q=${encodeURIComponent(query)}`, {
                         headers: {
                             "Authorization": "Bearer " + token
                         }
