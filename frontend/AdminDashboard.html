@@ -1720,7 +1720,7 @@
             event.stopPropagation();
             const token = localStorage.getItem("token");
 
-            await fetch(`http://localhost:8081/api/notifications/${id}/read`, {
+            await fetch(`https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/notifications/${id}/read`, {
                 method: "PUT",
                 headers: {
                     "Authorization": "Bearer " + token
@@ -1849,7 +1849,7 @@
                     try {
                         const token = localStorage.getItem("token");
 
-                        const res = await fetch(`http://localhost:8081/api/search?q=${encodeURIComponent(query)}`, {
+                        const res = await fetch(`https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/search?q=${encodeURIComponent(query)}`, {
                             headers: {
                                 "Authorization": "Bearer " + token
                             }
