@@ -989,7 +989,7 @@ Review your selected products and proceed to secure checkout.
 //     }
 
 //     try {
-//     const response = await fetch("http://localhost:8080/api/cart", {
+//     const response = await fetch("http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/cart", {
 //         method: "GET",
 //         headers: {
 //             "Authorization": "Bearer " + token
@@ -1083,7 +1083,7 @@ async function removeItem(productId) {
     const token = localStorage.getItem("token");
 
     try {
-        const response = await fetch(`http://localhost:8080/api/cart/remove/${productId}`, {
+        const response = await fetch(`http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/cart/remove/${productId}`, {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + token
@@ -1116,7 +1116,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //     }
 
 //     try {
-//         const response = await fetch("http://localhost:8080/api/cart", {
+//         const response = await fetch("http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/cart", {
 //             headers: {
 //                 "Authorization": "Bearer " + token
 //             }
@@ -1136,7 +1136,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-        const response = await fetch("http://localhost:8080/api/cart", {
+        const response = await fetch("http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/cart", {
             headers: {
                 "Authorization": "Bearer " + token
             }

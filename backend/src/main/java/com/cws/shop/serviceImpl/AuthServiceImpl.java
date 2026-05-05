@@ -99,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
         	); 
         
         Token token = tokenService.createToken(user, TokenType.EMAIL_VERIFICATION, EMAIL_VERIFICATION_HOURS);
-        String verificationLink = "http://localhost:8080/api/verify?token=" + token.getToken();
+        String verificationLink = "http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/verify?token=" + token.getToken();
         
         emailService.sendVerificationEmail(user.getEmail(), token.getToken());
         

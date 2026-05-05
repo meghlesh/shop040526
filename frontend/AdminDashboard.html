@@ -1559,7 +1559,7 @@
             try {
                 const token = localStorage.getItem("token");
 
-                const response = await fetch("http://localhost:8081/api/admin/dashboard/dashboard-stats", {
+                const response = await fetch("http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/admin/dashboard/dashboard-stats", {
                     headers: {
                         "Authorization": "Bearer " + token
                     }
@@ -1601,7 +1601,7 @@
             try {
                 const token = localStorage.getItem("token");
 
-                const response = await fetch("http://localhost:8081/api/users/me", {
+                const response = await fetch("http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/users/me", {
                     headers: {
                         "Authorization": "Bearer " + token
                     }

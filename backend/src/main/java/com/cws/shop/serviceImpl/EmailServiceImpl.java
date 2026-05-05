@@ -31,14 +31,14 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void sendVerificationEmail(String email, String token) {
 		
-		String link = "http://localhost:8080/api/verify?token=" + token;
+		String link = "http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/verify?token=" + token;
 		
 		SimpleMailMessage message = new SimpleMailMessage();
 		
 		message.setTo(email);
 		message.setSubject("Please Verify Your Account");
 		message.setFrom("pratik.cws1@gmail.com");
-		message.setText("Click on the link to verify your account: http://localhost:8080/api/verify?token=" + token);
+		message.setText("Click on the link to verify your account: http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/verify?token=" + token);
 		
 		mailSender.send(message);
 	}

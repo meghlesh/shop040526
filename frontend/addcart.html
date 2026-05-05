@@ -804,7 +804,7 @@ async function checkCart() {
     if (!token) return;
 
     try {
-        const response = await fetch("http://localhost:8080/api/cart", {
+        const response = await fetch("http://https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/cart", {
             headers: {
                 "Authorization": "Bearer " + token
             }
