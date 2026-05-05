@@ -44,6 +44,21 @@ public class SecurityConfig {
 	    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	    return http.build();
 	}
+
+
+	@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .cors() 
+        .and()
+        .csrf().disable()
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/auth/**", "/api/register/**").permitAll()
+            .anyRequest().authenticated()
+        );
+
+    return http.build();
+}
 	/*@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
