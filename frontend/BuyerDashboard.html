@@ -1494,7 +1494,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // load profile data
-  const user = await apiFetch("http://localhost:8081/api/users/me");
+  const user = await apiFetch("https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/users/me");
 
   if (user) {
     document.getElementById("profileName").innerText = user.name;
@@ -1555,7 +1555,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // notification unread count for the bell icon
 async function loadUnreadCount() {
-  const count = await apiFetch("http://localhost:8081/notifications/unread-count");
+  const count = await apiFetch("https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/notifications/unread-count");
   
 
   const badge = document.getElementById("notifBadge");
@@ -1574,7 +1574,7 @@ async function reloadNotifications() {
   const notifList = document.getElementById("notifList");
   const notifCount = document.getElementById("notifCount");
 
-  const data = await apiFetch("http://localhost:8081/notifications/unread");
+  const data = await apiFetch("https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/notifications/unread");
   console.log("Unread Notifications API Response:", data);
   
 
@@ -1606,7 +1606,7 @@ async function reloadNotifications() {
 // mark as read when click on the notification
 async function markAsRead(id) {
 
-  await apiFetch(`http://localhost:8081/notifications/${id}/read`, "PUT");
+  await apiFetch(`https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/notifications/${id}/read`, "PUT");
 
   // Refresh UI
   await loadUnreadCount();
@@ -1649,7 +1649,7 @@ searchInput.addEventListener("input", function () {
             }
 
             const res = await fetch(
-                `http://localhost:8081/api/search?q=${encodeURIComponent(query)}`,
+                `https://api-shop-be-bfdgh8fgbzhcfmhb.southindia-01.azurewebsites.net/api/search?q=${encodeURIComponent(query)}`,
                 {
                     headers: {
                         "Authorization": "Bearer " + token
