@@ -28,28 +28,30 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-	    http
-	    	.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+    http
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .csrf(csrf -> csrf.disable())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/register", "/api/login", "/api/forgot-password", "/api/reset-password", "/api/verify","/api/products/**","/api/users/me", "/api/notifications/**").permitAll()
-	                .requestMatchers("/superadmin/**").hasRole("SUPER_ADMIN")
-	                .requestMatchers("/admin/**").hasAnyRole("ADMIN","SUPER_ADMIN")
-	                .requestMatchers("/seller/**").hasRole("SELLER")
-	                .requestMatchers("/buyer/**").hasRole("BUYER")
+                .requestMatchers("/api/register", "/api/login", "/api/forgot-password",
+                        "/api/reset-password", "/api/verify", "/api/products/**",
+                        "/api/users/me", "/api/notifications/**").permitAll()
+                .requestMatchers("/superadmin/**").hasRole("SUPER_ADMIN")
+                .requestMatchers("/admin/**").hasAnyRole("ADMIN","SUPER_ADMIN")
+                .requestMatchers("/seller/**").hasRole("SELLER")
+                .requestMatchers("/buyer/**").hasRole("BUYER")
                 .requestMatchers("/api/order/**").hasRole("BUYER")
                 .requestMatchers("/api/products/**").permitAll()
                 .requestMatchers("/api/cart/**").permitAll()
                 .anyRequest().authenticated()
         );
-	    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-	    return http.build();
-	}
 
-	return http.build();
+    http.addFilterBefore(jwtAuthenticationFilter,
+            UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
 }
 
 @Bean
@@ -70,7 +72,6 @@ public CorsConfigurationSource corsConfigurationSource() {
     ));
 
     configuration.setAllowedHeaders(Arrays.asList("*"));
-
     configuration.setAllowCredentials(true);
 
     UrlBasedCorsConfigurationSource source =
@@ -80,8 +81,6 @@ public CorsConfigurationSource corsConfigurationSource() {
 
     return source;
 }
-
-
 	/*@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -128,4 +127,3 @@ public CorsConfigurationSource corsConfigurationSource() {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-}
