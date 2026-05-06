@@ -127,3 +127,7 @@ public CorsConfigurationSource corsConfigurationSource() {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+}
+
+
+	
