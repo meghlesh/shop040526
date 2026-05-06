@@ -60,7 +60,7 @@ public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
 
     configuration.setAllowedOrigins(Arrays.asList(
-        "https://victorious-wave-0c1a24f007.7.azurestaticapps.net"
+        "https://victorious-wave-0c1a24f00.7.azurestaticapps.net"
     ));
 
     configuration.setAllowedMethods(Arrays.asList(
